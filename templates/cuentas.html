@@ -1,0 +1,20 @@
+<!-- cuentas.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cuentas Bancarias</title>
+  </head>
+  <body>
+    <h1>Cuentas Bancarias</h1>
+    <ul>
+      {% for cuenta in cuentas %}
+      <li>
+        <a href="/cuenta/{{ cuenta.id }}">
+          {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
+          cuenta.saldo }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

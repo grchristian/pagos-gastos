@@ -1,0 +1,23 @@
+<!-- efectuar_pago.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Efectuar Pago</title>
+  </head>
+  <body>
+    <h1>Efectuar Pago</h1>
+    <p>Pago de ${{ pago.monto }}</p>
+    <form action="/pago/procesar/{{ pago.id }}" method="post">
+      <label for="cuenta_id">Selecciona Cuenta Bancaria:</label>
+      <select name="cuenta_id" id="cuenta_id">
+        {% for cuenta in cuentas %}
+        <option value="{{ cuenta.id }}">
+          {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
+          cuenta.saldo }}
+        </option>
+        {% endfor %}
+      </select>
+      <input type="submit" value="Efectuar Pago" />
+    </form>
+  </body>
+</html>

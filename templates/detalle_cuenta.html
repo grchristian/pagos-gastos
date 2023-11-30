@@ -1,0 +1,22 @@
+<!-- detalle_cuenta.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Detalle de Cuenta</title>
+  </head>
+  <body>
+    <h1>
+      Detalle de Cuenta: {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }}
+    </h1>
+    <p>Saldo: ${{ cuenta.saldo }}</p>
+    <h2>Cargos a esta Cuenta</h2>
+    <ul>
+      {% for pago in pagos %}
+      <li>
+        Pago de ${{ pago.monto }} - Fecha: {{ pago.fecha.strftime('%Y-%m-%d
+        %H:%M:%S') }} - Estado: {{ pago.estado }}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!-- pagos.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pagos</title>
+  </head>
+  <body>
+    <h1>Pagos Registrados</h1>
+    <ul>
+      {% for pago in pagos %}
+      <li>
+        Pago de ${{ pago.monto }} - Fecha: {{ pago.fecha.strftime('%Y-%m-%d
+        %H:%M:%S') }} - Estado: {{ pago.estado }} {% if pago.estado ==
+        'pendiente' %}
+        <a href="/pago/aprobar/{{ pago.id }}">Aprobar</a>
+        <a href="/pago/cancelar/{{ pago.id }}">Cancelar</a>
+        {% elif pago.estado == 'aprobado' %}
+        <a href="/pago/efectuar/{{ pago.id }}">Efectuar Pago</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
