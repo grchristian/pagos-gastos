@@ -31,6 +31,32 @@ Ensure you have Python and pip installed. Then, install the necessary dependenci
 pip install -r requirements.txt
 ```
 
+### Database Setup
+
+To set up and initialize the database, follow these steps:
+
+1. **Initialize the Database**:
+   Use Flask-Migrate to handle database migrations. First, initialize the migration environment:
+
+   ```bash
+   flask db init
+   ```
+
+2. **Create and Apply Migrations**:
+   Generate an initial migration and apply it to the database:
+
+   ```bash
+   flask db migrate -m "Initial migration."
+   flask db upgrade
+   ```
+
+3. **Populate the Database with dump data**:
+   Run the `setup_db.py` script to create initial data:
+
+   ```bash
+   python setup_db.py
+   ```
+
 ### Start the Application
 
 ```bash
