@@ -1,5 +1,51 @@
 <!-- templates/index.html -->
 {% extends "base.html" %} {% block title %}Inicio{% endblock %} {% block content
 %}
-<h1>App</h1>
+
+<div class="jumbotron">
+  <h1 class="display-4">Bienvenido a GastosApp</h1>
+  <p class="lead">
+    GastosApp es una aplicación de gestión de gastos y pagos para empresas.
+  </p>
+  <hr class="my-4" />
+  <p>
+    Explora las funcionalidades y gestiona las finanzas de tu empresa de manera
+    eficiente.
+  </p>
+  <a class="btn btn-primary btn-lg" href="#" role="button">Saber más</a>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <img src="/static/gastos.webp" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Gastos</h5>
+        <p class="card-text">Registra y gestiona gastos diarios.</p>
+        <a href="/gastos" class="btn btn-primary">Ver Gastos</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <img src="/static/pagos.jpeg" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Pagos</h5>
+        <p class="card-text">Controla pagos y revisa su estado actual.</p>
+        <a href="/pagos" class="btn btn-primary">Ver Pagos</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <img src="/static/cuentas.png" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Cuentas</h5>
+        <p class="card-text">Consulta tus cuentas bancarias y saldos.</p>
+        <a href="/cuentas" class="btn btn-primary">Ver Cuentas</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
