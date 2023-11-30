@@ -18,7 +18,11 @@
 <div class="row">
   <div class="col-md-4">
     <div class="card">
-      <img src="/static/gastos.webp" class="card-img-top" alt="..." />
+      <img
+        src="{{ url_for('static', filename='gastos.webp') }}"
+        class="card-img-top"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title">Gastos</h5>
         <p class="card-text">Registra y gestiona gastos diarios.</p>
@@ -28,7 +32,11 @@
   </div>
   <div class="col-md-4">
     <div class="card">
-      <img src="/static/pagos.jpeg" class="card-img-top" alt="..." />
+      <img
+        src="{{ url_for('static', filename='pagos.jpeg') }}"
+        class="card-img-top"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title">Pagos</h5>
         <p class="card-text">Controla pagos y revisa su estado actual.</p>
@@ -38,7 +46,11 @@
   </div>
   <div class="col-md-4">
     <div class="card">
-      <img src="/static/cuentas.png" class="card-img-top" alt="..." />
+      <img
+        src="{{ url_for('static', filename='cuentas.png') }}"
+        class="card-img-top"
+        alt="..."
+      />
       <div class="card-body">
         <h5 class="card-title">Cuentas</h5>
         <p class="card-text">Consulta tus cuentas bancarias y saldos.</p>
