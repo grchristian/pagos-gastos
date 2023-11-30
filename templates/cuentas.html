@@ -1,20 +1,16 @@
 <!-- cuentas.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Cuentas Bancarias</title>
-  </head>
-  <body>
-    <h1>Cuentas Bancarias</h1>
-    <ul>
-      {% for cuenta in cuentas %}
-      <li>
-        <a href="/cuenta/{{ cuenta.id }}">
-          {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
-          cuenta.saldo }}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Cuentas Bancarias{% endblock %} {%
+block content %} {% include "navbar.html" %}
+<h1 class="my-4">Cuentas Bancarias</h1>
+<div class="list-group">
+  {% for cuenta in cuentas %}
+  <a
+    href="/cuenta/{{ cuenta.id }}"
+    class="list-group-item list-group-item-action"
+  >
+    {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
+    cuenta.saldo }}
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

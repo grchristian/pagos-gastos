@@ -1,15 +1,13 @@
 <!-- efectuar_pago.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Efectuar Pago</title>
-  </head>
-  <body>
-    <h1>Efectuar Pago</h1>
-    <p>Pago de ${{ pago.monto }}</p>
-    <form action="/pago/procesar/{{ pago.id }}" method="post">
+{% extends "base.html" %} {% block title %}Efectuar Pago{% endblock %} {% block
+content %} {% include "navbar.html" %}
+<div class="container my-4">
+  <h1>Efectuar Pago</h1>
+  <p class="lead">Pago de ${{ pago.monto }}</p>
+  <form action="/pago/procesar/{{ pago.id }}" method="post" class="my-3">
+    <div class="form-group">
       <label for="cuenta_id">Selecciona Cuenta Bancaria:</label>
-      <select name="cuenta_id" id="cuenta_id">
+      <select name="cuenta_id" id="cuenta_id" class="form-control">
         {% for cuenta in cuentas %}
         <option value="{{ cuenta.id }}">
           {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
@@ -17,7 +15,8 @@
         </option>
         {% endfor %}
       </select>
-      <input type="submit" value="Efectuar Pago" />
-    </form>
-  </body>
-</html>
+    </div>
+    <button type="submit" class="btn btn-primary">Efectuar Pago</button>
+  </form>
+</div>
+{% endblock %}

@@ -14,7 +14,7 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
-    return redirect(url_for('ver_gastos'))
+    return render_template('index.html')
 
 
 @app.route('/gasto/nuevo', methods=['POST'])

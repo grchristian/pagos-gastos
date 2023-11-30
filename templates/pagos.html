@@ -1,24 +1,33 @@
 <!-- pagos.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Pagos</title>
-  </head>
-  <body>
-    <h1>Pagos Registrados</h1>
-    <ul>
-      {% for pago in pagos %}
-      <li>
-        Pago de ${{ pago.monto }} - Fecha: {{ pago.fecha.strftime('%Y-%m-%d
-        %H:%M:%S') }} - Estado: {{ pago.estado }} {% if pago.estado ==
-        'pendiente' %}
-        <a href="/pago/aprobar/{{ pago.id }}">Aprobar</a>
-        <a href="/pago/cancelar/{{ pago.id }}">Cancelar</a>
+{% extends "base.html" %} {% block title %}Pagos{% endblock %} {% block content
+%} {% include "navbar.html" %}
+
+<div class="container my-4">
+  <h1>Pagos Registrados</h1>
+  <ul class="list-group">
+    {% for pago in pagos %}
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      Pago de ${{ pago.monto }} - Fecha: {{ pago.fecha.strftime('%Y-%m-%d
+      %H:%M:%S') }} - Estado: {{ pago.estado }}
+      <div>
+        {% if pago.estado == 'pendiente' %}
+        <a href="/pago/aprobar/{{ pago.id }}" class="btn btn-success btn-sm"
+          >Aprobar</a
+        >
+        <a href="/pago/cancelar/{{ pago.id }}" class="btn btn-danger btn-sm"
+          >Cancelar</a
+        >
         {% elif pago.estado == 'aprobado' %}
-        <a href="/pago/efectuar/{{ pago.id }}">Efectuar Pago</a>
+        <a href="/pago/efectuar/{{ pago.id }}" class="btn btn-warning btn-sm"
+          >Efectuar Pago</a
+        >
         {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

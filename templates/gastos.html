@@ -1,30 +1,56 @@
-<!-- gastos.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Gastos</title>
-  </head>
-  <body>
-    <h1>Registrar Gasto</h1>
-    <form action="/gasto/nuevo" method="post">
-      Descripción: <input type="text" name="descripcion" /><br />
-      Monto: <input type="number" name="monto" step="any" /><br />
-      <input type="submit" value="Registrar Gasto" />
-    </form>
+<!-- templates/gastos.html -->
+{% extends "base.html" %} {% block title %}Gastos{% endblock %} {% block content
+%} {% include "navbar.html" %}
 
-    <h2>Gastos Registrados</h2>
-    <ul>
-      {% for gasto in gastos %}
-      <li>
-        {{ gasto.descripcion }}: ${{ gasto.monto }} - Estado: {{ gasto.estado }}
+<div class="container my-4">
+  <h1>Registrar Gasto</h1>
+  <form action="/gasto/nuevo" method="post" class="my-3">
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="descripcion"
+        id="descripcion"
+      />
+    </div>
+    <div class="form-group">
+      <label for="monto">Monto:</label>
+      <input
+        type="number"
+        class="form-control"
+        name="monto"
+        id="monto"
+        step="any"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar Gasto</button>
+  </form>
+
+  <h2>Gastos Registrados</h2>
+  <ul class="list-group">
+    {% for gasto in gastos %}
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ gasto.descripcion }}: ${{ gasto.monto }} - Estado: {{ gasto.estado }}
+      <div>
         {% if gasto.estado == 'pendiente' %}
-        <a href="/gasto/aprobar/{{ gasto.id }}">Aprobar</a>
-        <a href="/gasto/cancelar/{{ gasto.id }}">Cancelar</a>
+        <a href="/gasto/aprobar/{{ gasto.id }}" class="btn btn-success btn-sm"
+          >Aprobar</a
+        >
+        <a href="/gasto/cancelar/{{ gasto.id }}" class="btn btn-danger btn-sm"
+          >Cancelar</a
+        >
         {% elif gasto.estado == 'aprobado' and not gasto.pago_generado %}
-        <a href="/pago/generar/{{ gasto.id }}">Generar Pago</a>
+        <a href="/pago/generar/{{ gasto.id }}" class="btn btn-warning btn-sm"
+          >Generar Pago</a
+        >
         {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
