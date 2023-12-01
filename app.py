@@ -8,7 +8,6 @@ from datetime import datetime
 from flask_migrate import Migrate
 from collections import defaultdict
 from datetime import datetime
-from flask import jsonify
 
 app = Flask(__name__)
 app.secret_key = 'helloworld'
@@ -153,20 +152,6 @@ def detalles_cuenta(cuenta_id):
     cuenta = CuentaBancaria.query.get_or_404(cuenta_id)
     pagos = Pago.query.filter_by(cuenta_bancaria_id=cuenta_id).all()
     return render_template('detalle_cuenta.html', cuenta=cuenta, pagos=pagos)
-
-@app.route('/export-data')
-def export_data():
-    gastos = Gasto.query.all()
-    pagos = Pago.query.all()
-    cuentas_bancarias = CuentaBancaria.query.all()
-
-    data = {
-        "gastos": [gasto.to_dict() for gasto in gastos],
-        "pagos": [pago.to_dict() for pago in pagos],
-        "cuentas_bancarias": [cuenta.to_dict() for cuenta in cuentas_bancarias]
-    }
-    
-    return jsonify(data)
 
 # Dashboard
 @app.route('/dashboard')
