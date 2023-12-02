@@ -82,6 +82,7 @@ def nuevo_pago(gasto_id):
 # Ruta para aprobar un pago
 
 
+# Ruta para aprobar un pago
 @app.route('/pago/aprobar/<int:id>')
 def aprobar_pago(id):
     pago = Pago.query.get(id)
@@ -123,6 +124,7 @@ def efectuar_pago(pago_id):
     return render_template('efectuar_pago.html', pago=pago, cuentas=cuentas)
 
 
+# Ruta para procesar y efectuar un pago
 @app.route('/pago/procesar/<int:pago_id>', methods=['POST'])
 def procesar_pago(pago_id):
     pago = Pago.query.get(pago_id)
@@ -135,10 +137,10 @@ def procesar_pago(pago_id):
             pago.estado = 'efectuado'
             pago.cuenta_bancaria_id = cuenta.id
             db.session.commit()
+            flash('Pago efectuado exitosamente', 'success')
             return redirect(url_for('ver_pagos'))
         else:
-            flash('Fondos insuficientes en la cuenta seleccionada',
-                  'danger')  # Mensaje flash con categoría 'danger'
+            flash('Fondos insuficientes en la cuenta seleccionada', 'danger')
             return redirect(url_for('efectuar_pago', pago_id=pago.id))
 
     return redirect(url_for('ver_pagos'))
@@ -149,11 +151,11 @@ def ver_cuentas():
     cuentas = CuentaBancaria.query.all()
     return render_template('cuentas.html', cuentas=cuentas)
 
-
 @app.route('/cuenta/<int:cuenta_id>')
 def detalles_cuenta(cuenta_id):
     cuenta = CuentaBancaria.query.get_or_404(cuenta_id)
-    pagos = Pago.query.filter_by(cuenta_bancaria_id=cuenta_id).all()
+    # Filtrar pagos que están en estado 'efectuado'
+    pagos = Pago.query.filter_by(cuenta_bancaria_id=cuenta_id, estado='efectuado').all()
     return render_template('detalle_cuenta.html', cuenta=cuenta, pagos=pagos)
 
 # Dashboard

@@ -1,6 +1,7 @@
 <!-- detalle_cuenta.html -->
-{% extends "base.html" %} {% block title %}Detalle de Cuenta{% endblock %} {%
-block content %}
+{% extends "base.html" %} 
+{% block title %}Detalle de Cuenta{% endblock %} 
+{% block content %}
 <div class="my-4">
   <h1>
     Detalle de Cuenta: {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }}
@@ -10,8 +11,7 @@ block content %}
   <ul class="list-group">
     {% for pago in pagos %}
     <li class="list-group-item">
-      Pago de ${{ pago.monto }} - Fecha: {{ pago.fecha.strftime('%Y-%m-%d
-      %H:%M:%S') }} - Estado: {{ pago.estado }}
+      <strong>Pago de ${{ pago.monto }}</strong> - Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S') }} - Estado: {{ pago.estado }}
     </li>
     {% endfor %}
   </ul>
