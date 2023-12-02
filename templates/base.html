@@ -15,7 +15,7 @@
   <body>
     {% include "navbar.html" %}
 
-    <main class="container mt-4">
+    <main class="{% if full_width %}container-fluid{% else %}container{% endif %} mt-4">
       {% with messages = get_flashed_messages(with_categories=true) %} 
       {% if messages %} 
       {% for category, message in messages %}

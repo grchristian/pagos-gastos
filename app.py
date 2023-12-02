@@ -177,7 +177,7 @@ def detalles_cuenta(cuenta_id):
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', full_width=True)
 
 
 @app.route('/api/gastos-estatus')

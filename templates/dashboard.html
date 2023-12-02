@@ -3,69 +3,57 @@
 {% block title %}Dashboard{% endblock %} 
 {% block content %}
 
-<div class="container">
+<div class="container-fluid">
   <h1 class="text-center text-primary my-4">Dashboard</h1>
 
-  <!-- Primer fila de gráficos -->
-  <div class="row my-4">
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
-          <div id="cuentas-grafico-1"></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
+  <!-- Pestañas de navegación -->
+  <!-- Pestañas de navegación -->
+  <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="gastos-tab" data-toggle="tab" href="#gastos" role="tab" aria-controls="gastos" aria-selected="true">Gastos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pagos-tab" data-toggle="tab" href="#pagos" role="tab" aria-controls="pagos" aria-selected="false">Pagos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="cuentas-tab" data-toggle="tab" href="#cuentas" role="tab" aria-controls="cuentas" aria-selected="false">Cuentas</a>
+    </li>
+  </ul>
+
+  <!-- Contenido de las pestañas -->
+  <div class="tab-content" id="dashboardTabsContent">
+    <!-- Pestaña Gastos -->
+    <div class="tab-pane fade show active" id="gastos" role="tabpanel" aria-labelledby="gastos-tab">
+      <div class="row">
+        <div class="col-md-6">
           <div id="gastos-grafico-1"></div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Segunda fila de gráficos -->
-  <div class="row my-4">
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
-          <div id="cuentas-grafico-2"></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
+        <div class="col-md-6">
           <div id="gastos-grafico-2"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Tercera fila de gráficos -->
-  <div class="row my-4">
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
+    <!-- Pestaña Pagos -->
+    <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
+      <div class="row">
+        <div class="col-md-6">
           <div id="pagos-grafico-1"></div>
         </div>
-      </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
+        <div class="col-md-6">
           <div id="pagos-grafico-2"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Cuarta fila de gráficos -->
-  <div class="row my-4">
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow">
-        <div class="card-body">
-          <div id="pagos-grafico-3"></div>
+    <!-- Pestaña Cuentas -->
+    <div class="tab-pane fade" id="cuentas" role="tabpanel" aria-labelledby="cuentas-tab">
+      <div class="row">
+        <div class="col-md-6">
+          <div id="cuentas-grafico-1"></div>
+        </div>
+        <div class="col-md-6">
+          <div id="cuentas-grafico-2"></div>
         </div>
       </div>
     </div>
