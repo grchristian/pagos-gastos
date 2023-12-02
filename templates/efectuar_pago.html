@@ -1,22 +1,26 @@
 <!-- efectuar_pago.html -->
-{% extends "base.html" %} {% block title %}Efectuar Pago{% endblock %} {% block
-content %}
-<div class="container my-4">
-  <h1>Efectuar Pago</h1>
-  <p class="lead">Pago de ${{ pago.monto }}</p>
-  <form action="/pago/procesar/{{ pago.id }}" method="post" class="my-3">
-    <div class="form-group">
-      <label for="cuenta_id">Selecciona Cuenta Bancaria:</label>
-      <select name="cuenta_id" id="cuenta_id" class="form-control">
-        {% for cuenta in cuentas %}
-        <option value="{{ cuenta.id }}">
-          {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{
-          cuenta.saldo }}
-        </option>
-        {% endfor %}
-      </select>
+{% extends "base.html" %} 
+{% block title %}Efectuar Pago{% endblock %} 
+{% block content %}
+<div class="container my-5">
+  <h1 class="text-center text-primary mb-4">Efectuar Pago</h1>
+  <div class="card">
+    <div class="card-body">
+      <p class="lead">Pago de ${{ pago.monto }}</p>
+      <form action="/pago/procesar/{{ pago.id }}" method="post" class="my-3">
+        <div class="form-group">
+          <label for="cuenta_id">Selecciona Cuenta Bancaria:</label>
+          <select name="cuenta_id" id="cuenta_id" class="form-control">
+            {% for cuenta in cuentas %}
+            <option value="{{ cuenta.id }}">
+              {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }} - Saldo: ${{ cuenta.saldo }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Efectuar Pago</button>
+      </form>
     </div>
-    <button type="submit" class="btn btn-primary">Efectuar Pago</button>
-  </form>
+  </div>
 </div>
 {% endblock %}

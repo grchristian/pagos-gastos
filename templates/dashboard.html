@@ -1,27 +1,78 @@
-{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
-content %}
+<!-- templates/dashboard.html -->
+{% extends "base.html" %} 
+{% block title %}Dashboard{% endblock %} 
+{% block content %}
 
 <div class="container">
-  <h1 class="my-4">Dashboard</h1>
+  <h1 class="text-center text-primary my-4">Dashboard</h1>
 
-  <div id="cuentas-grafico-2"></div>
+  <!-- Primer fila de gráficos -->
+  <div class="row my-4">
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="cuentas-grafico-1"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="gastos-grafico-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Segunda fila de gráficos -->
+  <div class="row my-4">
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="cuentas-grafico-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="gastos-grafico-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <div id="pagos-grafico-3"></div>
+  <!-- Tercera fila de gráficos -->
+  <div class="row my-4">
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="pagos-grafico-1"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="pagos-grafico-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-  <div id="cuentas-grafico-1"></div>
-
-  <div id="gastos-grafico-1"></div>
-  <div id="gastos-grafico-2"></div>
-
-  <div id="pagos-grafico-1"></div>
-  <div id="pagos-grafico-2"></div>
-
+  <!-- Cuarta fila de gráficos -->
+  <div class="row my-4">
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div id="pagos-grafico-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </div>
 
-<!-- Incluir el archivo JavaScript al final -->
 <script src="{{ url_for('static', filename='dashboard-charts.js') }}"></script>
 {% endblock %}

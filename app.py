@@ -48,7 +48,7 @@ def nuevo_gasto():
 
 @app.route('/gastos')
 def ver_gastos():
-    gastos = Gasto.query.all()
+    gastos = Gasto.query.order_by(Gasto.id.desc()).all()
     return render_template('gastos.html', gastos=gastos)
 
 
@@ -90,7 +90,8 @@ def generar_pago(gasto_id):
 
 @app.route('/pagos')
 def ver_pagos():
-    pagos = Pago.query.all()
+    # query all pagos and order by fecha desc
+    pagos  = Pago.query.order_by(Pago.fecha.desc()).all()
     return render_template('pagos.html', pagos=pagos)
 
 # Ruta para registrar un nuevo pago
@@ -111,6 +112,8 @@ def aprobar_pago(id):
     if pago:
         pago.estado = 'aprobado'
         db.session.commit()
+
+        flash('Pago aprobado con éxito.', 'success')
     return redirect(url_for('ver_pagos'))
 
 # Ruta para cancelar un pago
@@ -120,8 +123,9 @@ def cancelar_pago(id):
     if pago:
         pago.estado = 'cancelado'
         db.session.commit()
-    return redirect(url_for('ver_pagos'))
 
+        flash('Pago cancelado con éxito.', 'success')
+    return redirect(url_for('ver_pagos'))
 
 @app.route('/pago/efectuar/<int:pago_id>')
 def efectuar_pago(pago_id):

@@ -2,18 +2,31 @@
 {% extends "base.html" %} 
 {% block title %}Detalle de Cuenta{% endblock %} 
 {% block content %}
-<div class="my-4">
-  <h1>
-    Detalle de Cuenta: {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }}
-  </h1>
-  <p class="lead">Saldo: ${{ cuenta.saldo }}</p>
-  <h2 class="mt-4">Cargos a esta Cuenta</h2>
-  <ul class="list-group">
-    {% for pago in pagos %}
-    <li class="list-group-item">
-      <strong>Pago de ${{ pago.monto }}</strong> - Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S') }} - Estado: {{ pago.estado }}
-    </li>
-    {% endfor %}
-  </ul>
+<div class="container my-5">
+  <div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+      <h1 class="h3 mb-0">
+        Detalle de Cuenta: {{ cuenta.nombre_banco }} - {{ cuenta.numero_cuenta }}
+      </h1>
+    </div>
+    <div class="card-body bg-light">
+      <h5 class="card-title text-success">Saldo: ${{ cuenta.saldo }}</h5>
+      <h2 class="h4 mt-4 text-primary">Cargos a esta Cuenta</h2>
+      <ul class="list-group list-group-flush">
+        {% for pago in pagos %}
+        <li class="list-group-item {{ 'list-group-item-success' if pago.estado == 'aprobado' else 'list-group-item-warning' if pago.estado == 'pendiente' else 'list-group-item-secondary' }}">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <strong>Pago de ${{ pago.monto }}</strong> - Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S') }}
+            </div>
+            <span class="badge {{ 'badge-success' if pago.estado == 'aprobado' else 'badge-warning' if pago.estado == 'pendiente' else 'badge-secondary' }}">
+              {{ pago.estado | capitalize }}
+            </span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
 {% endblock %}
