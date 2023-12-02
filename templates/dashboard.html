@@ -1,164 +1,26 @@
 {% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
 content %}
+
 <div class="container">
   <h1 class="my-4">Dashboard</h1>
 
-  <!-- Tabs de Navegación -->
-  <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-    <li class="nav-item">
-      <a
-        class="nav-link active"
-        id="gastos-tab"
-        data-toggle="tab"
-        href="#gastos"
-        role="tab"
-        aria-controls="gastos"
-        aria-selected="true"
-        >Gastos</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="pagos-tab"
-        data-toggle="tab"
-        href="#pagos"
-        role="tab"
-        aria-controls="pagos"
-        aria-selected="false"
-        >Pagos</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="cuentas-tab"
-        data-toggle="tab"
-        href="#cuentas"
-        role="tab"
-        aria-controls="cuentas"
-        aria-selected="false"
-        >Cuentas</a
-      >
-    </li>
-  </ul>
+  <div id="cuentas-grafico-2"></div>
 
-  <!-- Contenido de Tabs -->
-  <div class="tab-content" id="dashboardTabsContent">
-    <!-- Tab Gastos -->
-    <div
-      class="tab-pane fade show active"
-      id="gastos"
-      role="tabpanel"
-      aria-labelledby="gastos-tab"
-    >
-      <div class="row">
-        <!-- Aquí van los 2 gráficos relacionados con Gastos -->
-        <!-- Gráfico 1 para Gastos -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="gastos-grafico-1"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-        <!-- Gráfico 2 para Gastos -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="gastos-grafico-2"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Tab Pagos -->
-    <div
-      class="tab-pane fade"
-      id="pagos"
-      role="tabpanel"
-      aria-labelledby="pagos-tab"
-    >
-      <div class="row">
-        <!-- Aquí van los 2 gráficos relacionados con Pagos -->
-        <!-- Gráfico 1 para pagos -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="pagos-grafico-1"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-        <!-- Gráfico 2 para pagos -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="pagos-grafico-2"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div id="pagos-grafico-3"></div>
 
-    <!-- Tab Cuentas -->
-    <div
-      class="tab-pane fade"
-      id="cuentas"
-      role="tabpanel"
-      aria-labelledby="cuentas-tab"
-    >
-      <div class="row">
-        <!-- Aquí van los 2 gráficos relacionados con cuentas -->
-        <!-- Gráfico 1 para cuentas -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="cuentas-grafico-1"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-        <!-- Gráfico 2 para cuentas -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <div
-                id="cuentas-grafico-2"
-                style="width: 100%; height: 400px"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <div id="cuentas-grafico-1"></div>
+
+  <div id="gastos-grafico-1"></div>
+  <div id="gastos-grafico-2"></div>
+
+  <div id="pagos-grafico-1"></div>
+  <div id="pagos-grafico-2"></div>
+
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </div>
-
-<script>
-  // gastos-grafico-1
-  var gastosEstatusLabels = {{ gastos_estatus.keys() | list | tojson | safe }};
-  var gastosEstatusValues = {{ gastos_estatus.values() | list | tojson | safe }};
-  // gastos-grafico-2
-  var gastosMontosLabels = {{ nombres_gastos | list | tojson | safe }};
-  var gastosMontosValues = {{ montos_gastos | list | tojson | safe }};
-</script>
 
 <!-- Incluir el archivo JavaScript al final -->
 <script src="{{ url_for('static', filename='dashboard-charts.js') }}"></script>

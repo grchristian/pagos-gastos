@@ -2,12 +2,15 @@
 
 from collections import Counter
 from models import Gasto
-from flask import Flask, flash, request, redirect, url_for, render_template
+from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
 from models import db, Gasto, Pago, CuentaBancaria
 from datetime import datetime
 from flask_migrate import Migrate
 from collections import defaultdict
 from datetime import datetime
+from sqlalchemy import func, extract
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
 app.secret_key = 'helloworld'
@@ -154,21 +157,98 @@ def detalles_cuenta(cuenta_id):
     return render_template('detalle_cuenta.html', cuenta=cuenta, pagos=pagos)
 
 # Dashboard
+
+
 @app.route('/dashboard')
 def dashboard():
-    # gastos-grafico-1: grafica de barras de gastos por estatus
+    return render_template('dashboard.html')
+
+
+@app.route('/api/gastos-estatus')
+def gastos_estatus_data():
     gastos_estatus = Counter(gasto.estado for gasto in Gasto.query.all())
-    # gastos-grafico-2: grafica con nombres de los gastos en el eje x y montos en el eje
+    return jsonify(dict(gastos_estatus))
+
+
+@app.route('/api/gastos-montos')
+def gastos_montos_data():
     nombres_gastos = [gasto.descripcion for gasto in Gasto.query.all()]
     montos_gastos = [gasto.monto for gasto in Gasto.query.all()]
+    return jsonify({'nombres_gastos': nombres_gastos, 'montos_gastos': montos_gastos})
 
-    # TODO:
-    # pagos-grafico-1: histograma de pagos a lo largo del tiempo
-    # pagos-grafico-2:
-    # cuentas-grafico-1:
-    # cuentas-grafico-2:
 
-    return render_template('dashboard.html', gastos_estatus=gastos_estatus, gastos=Gasto.query.all(), nombres_gastos=nombres_gastos, montos_gastos=montos_gastos)
+@app.route('/api/pagos-estatus')
+def pagos_estatus_data():
+    pagos_estatus = Counter(pago.estado for pago in Pago.query.all())
+    return jsonify(dict(pagos_estatus))
+
+
+@app.route('/api/pagos-totales')
+def pagos_totales_data():
+    datos = db.session.query(
+        CuentaBancaria.nombre_banco.label('cuenta'),
+        func.strftime('%Y-%m-%d', Pago.fecha).label('dia'),
+        func.sum(Pago.monto).label('total')
+    ).join(CuentaBancaria).group_by(CuentaBancaria.nombre_banco, 'dia').order_by('dia').all()
+
+    # Preparar los datos para el frontend
+    resultados = {}
+    for cuenta, dia, total in datos:
+        if cuenta not in resultados:
+            resultados[cuenta] = {'fechas': [], 'totales': []}
+        resultados[cuenta]['fechas'].append(dia)
+        resultados[cuenta]['totales'].append(total)
+
+    return jsonify(resultados)
+
+
+@app.route('/api/cuentas-disponibilidad')
+def cuentas_disponibilidad_data():
+    cuentas = CuentaBancaria.query.all()
+    datos = [{'nombre': cuenta.nombre_banco, 'disponible': cuenta.saldo}
+             for cuenta in cuentas]
+    return jsonify(datos)
+
+
+@app.route('/api/pagos-estadisticas')
+def pagos_estadisticas_data():
+    datos = db.session.query(
+        extract('month', Pago.fecha).label('mes'),
+        func.sum(Pago.monto).label('total'),
+        func.avg(Pago.monto).label('promedio')
+    ).group_by('mes').order_by('mes').all()
+
+    meses = [d[0] for d in datos]
+    totales = [d[1] for d in datos]
+    promedios = [d[2] for d in datos]
+
+    return jsonify({'meses': meses, 'totales': totales, 'promedios': promedios})
+
+
+@app.route('/api/gastos-por-cuenta')
+def gastos_por_cuenta_data():
+    datos = db.session.query(
+        CuentaBancaria.nombre_banco.label('cuenta'),
+        extract('month', Pago.fecha).label('mes'),
+        func.sum(Pago.monto).label('total')
+    ).join(Pago).group_by(CuentaBancaria.nombre_banco, 'mes').order_by('mes').all()
+
+    resultados = {}
+    for cuenta, mes, total in datos:
+        if cuenta not in resultados:
+            resultados[cuenta] = {'meses': [], 'totales': [], 'tendencia': []}
+        resultados[cuenta]['meses'].append(mes)
+        resultados[cuenta]['totales'].append(total)
+
+        # Calcular la línea de tendencia
+        if len(resultados[cuenta]['meses']) > 1:
+            x = np.array(resultados[cuenta]['meses']).reshape(-1, 1)
+            y = np.array(resultados[cuenta]['totales'])
+            modelo = LinearRegression().fit(x, y)
+            tendencia = modelo.predict(x)
+            resultados[cuenta]['tendencia'] = tendencia.tolist()
+
+    return jsonify(resultados)
 
 
 if __name__ == '__main__':
