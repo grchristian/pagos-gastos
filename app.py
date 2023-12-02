@@ -29,11 +29,20 @@ def index():
 def nuevo_gasto():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
-        monto = float(request.form['monto'])
+        monto = request.form['monto']
+
+        # Verificar si los campos están vacíos
+        if not descripcion or not monto:
+            return redirect(url_for('ver_gastos'))
+
+        monto = float(monto)
+
         nuevo_gasto = Gasto(descripcion=descripcion,
                             monto=monto, estado='pendiente')
         db.session.add(nuevo_gasto)
         db.session.commit()
+
+        flash('Gasto agregado con éxito.', 'success')
         return redirect(url_for('ver_gastos'))
 
 
@@ -49,6 +58,8 @@ def aprobar_gasto(id):
     if gasto:
         gasto.estado = 'aprobado'
         db.session.commit()
+
+        flash('Gasto aprobado con éxito.', 'success')
     return redirect(url_for('ver_gastos'))
 
 
@@ -58,6 +69,22 @@ def cancelar_gasto(id):
     if gasto:
         gasto.estado = 'cancelado'
         db.session.commit()
+
+        flash('Gasto cancelado con éxito.', 'success')
+    return redirect(url_for('ver_gastos'))
+
+
+@app.route('/pago/generar/<int:gasto_id>', methods=['GET', 'POST'])
+def generar_pago(gasto_id):
+    gasto = Gasto.query.get(gasto_id)
+    if gasto and gasto.estado == 'aprobado' and not gasto.pago_generado:
+        nuevo_pago = Pago(monto=gasto.monto, fecha=datetime.now(),
+                          estado='pendiente', cuenta_bancaria_id=1)
+        db.session.add(nuevo_pago)
+        gasto.pago_generado = True
+        db.session.commit()
+
+        flash('Pago generado con éxito.', 'success')
     return redirect(url_for('ver_gastos'))
 
 
@@ -67,8 +94,6 @@ def ver_pagos():
     return render_template('pagos.html', pagos=pagos)
 
 # Ruta para registrar un nuevo pago
-
-
 @app.route('/pago/nuevo/<int:gasto_id>', methods=['POST'])
 def nuevo_pago(gasto_id):
     gasto = Gasto.query.get(gasto_id)
@@ -80,9 +105,6 @@ def nuevo_pago(gasto_id):
     return redirect(url_for('ver_pagos'))
 
 # Ruta para aprobar un pago
-
-
-# Ruta para aprobar un pago
 @app.route('/pago/aprobar/<int:id>')
 def aprobar_pago(id):
     pago = Pago.query.get(id)
@@ -92,25 +114,11 @@ def aprobar_pago(id):
     return redirect(url_for('ver_pagos'))
 
 # Ruta para cancelar un pago
-
-
 @app.route('/pago/cancelar/<int:id>')
 def cancelar_pago(id):
     pago = Pago.query.get(id)
     if pago:
         pago.estado = 'cancelado'
-        db.session.commit()
-    return redirect(url_for('ver_pagos'))
-
-
-@app.route('/pago/generar/<int:gasto_id>', methods=['GET', 'POST'])
-def generar_pago(gasto_id):
-    gasto = Gasto.query.get(gasto_id)
-    if gasto and gasto.estado == 'aprobado' and not gasto.pago_generado:
-        nuevo_pago = Pago(monto=gasto.monto, fecha=datetime.now(),
-                          estado='pendiente', cuenta_bancaria_id=1)
-        db.session.add(nuevo_pago)
-        gasto.pago_generado = True
         db.session.commit()
     return redirect(url_for('ver_pagos'))
 
@@ -151,11 +159,13 @@ def ver_cuentas():
     cuentas = CuentaBancaria.query.all()
     return render_template('cuentas.html', cuentas=cuentas)
 
+
 @app.route('/cuenta/<int:cuenta_id>')
 def detalles_cuenta(cuenta_id):
     cuenta = CuentaBancaria.query.get_or_404(cuenta_id)
     # Filtrar pagos que están en estado 'efectuado'
-    pagos = Pago.query.filter_by(cuenta_bancaria_id=cuenta_id, estado='efectuado').all()
+    pagos = Pago.query.filter_by(
+        cuenta_bancaria_id=cuenta_id, estado='efectuado').all()
     return render_template('detalle_cuenta.html', cuenta=cuenta, pagos=pagos)
 
 # Dashboard
