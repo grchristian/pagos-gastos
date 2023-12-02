@@ -1,6 +1,6 @@
 <!-- templates/gastos.html -->
-{% extends "base.html" %} 
-{% block title %}Gastos{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Gastos{% endblock %}
 {% block content %}
 <div class="container my-5">
   <h1 class="text-center text-primary mb-4">Registrar Gasto</h1>
@@ -27,8 +27,9 @@
       <div>
         <h5 class="mb-1">{{ gasto.descripcion }}: ${{ gasto.monto }}</h5>
         <small>
-          Estado: 
-          <span class="badge {{ 'badge-success' if gasto.estado == 'aprobado' else 'badge-warning' if gasto.estado == 'pendiente' else 'badge-danger' if gasto.estado == 'cancelado' else 'badge-secondary' }}">
+          Estado:
+          <span
+            class="badge {{ 'badge-success' if gasto.estado == 'aprobado' else 'badge-warning' if gasto.estado == 'pendiente' else 'badge-danger' if gasto.estado == 'cancelado' else 'badge-secondary' }}">
             {{ gasto.estado | capitalize }}
           </span>
         </small>

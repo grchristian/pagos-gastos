@@ -1,22 +1,31 @@
 <!-- templates/dashboard.html -->
-{% extends "base.html" %} 
-{% block title %}Dashboard{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
+
+<style>
+  #dashboardTabs .nav-item {
+    flex-grow: 1;
+    text-align: center;
+  }
+</style>
 
 <div class="container-fluid">
   <h1 class="text-center text-primary my-4">Dashboard</h1>
 
   <!-- Pestañas de navegación -->
-  <!-- Pestañas de navegación -->
-  <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+  <ul class="nav nav-tabs justify-content-center" id="dashboardTabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="gastos-tab" data-toggle="tab" href="#gastos" role="tab" aria-controls="gastos" aria-selected="true">Gastos</a>
+      <a class="nav-link active" id="gastos-tab" data-toggle="tab" href="#gastos" role="tab" aria-controls="gastos"
+        aria-selected="true">Gastos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="pagos-tab" data-toggle="tab" href="#pagos" role="tab" aria-controls="pagos" aria-selected="false">Pagos</a>
+      <a class="nav-link" id="pagos-tab" data-toggle="tab" href="#pagos" role="tab" aria-controls="pagos"
+        aria-selected="false">Pagos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="cuentas-tab" data-toggle="tab" href="#cuentas" role="tab" aria-controls="cuentas" aria-selected="false">Cuentas</a>
+      <a class="nav-link" id="cuentas-tab" data-toggle="tab" href="#cuentas" role="tab" aria-controls="cuentas"
+        aria-selected="false">Cuentas</a>
     </li>
   </ul>
 

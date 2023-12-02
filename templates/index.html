@@ -1,6 +1,6 @@
 <!-- templates/index.html -->
-{% extends "base.html" %} 
-{% block title %}Inicio{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
 {% block content %}
 
 <div class="jumbotron bg-light border">
@@ -19,7 +19,8 @@
   {% for seccion in ['gastos', 'pagos', 'cuentas'] %}
   <div class="col-md-4 mb-4">
     <div class="card h-100 shadow">
-      <img src="{{ url_for('static', filename=seccion + '.jpg') }}" class="card-img-top" alt="Imagen de {{ seccion | capitalize }}">
+      <img src="{{ url_for('static', filename=seccion + '.jpg') }}" class="card-img-top"
+        alt="Imagen de {{ seccion | capitalize }}">
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">{{ seccion | capitalize }}</h5>
         <p class="card-text">Aquí una breve descripción de {{ seccion | capitalize }}.</p>

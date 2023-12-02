@@ -1,6 +1,6 @@
 <!-- pagos.html -->
-{% extends "base.html" %} 
-{% block title %}Pagos{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Pagos{% endblock %}
 {% block content %}
 <div class="container my-5">
   <h1 class="text-center text-primary mb-4">Pagos Registrados</h1>
@@ -10,7 +10,9 @@
       <div>
         <h5 class="mb-1">Pago de ${{ pago.monto }}</h5>
         <small>Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</small>
-        <span class="badge {{ 'badge-success' if pago.estado == 'aprobado' else 'badge-warning' if pago.estado == 'pendiente' else 'badge-danger' if pago.estado == 'cancelado' else 'badge-secondary' }} ml-2">{{ pago.estado | capitalize }}</span>
+        <span
+          class="badge {{ 'badge-success' if pago.estado == 'aprobado' else 'badge-warning' if pago.estado == 'pendiente' else 'badge-danger' if pago.estado == 'cancelado' else 'badge-secondary' }} ml-2">{{
+          pago.estado | capitalize }}</span>
       </div>
       <div>
         {% if pago.estado == 'pendiente' %}
