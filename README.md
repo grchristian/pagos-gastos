@@ -63,4 +63,26 @@ To set up and initialize the database, follow these steps:
 flask run
 ```
 
-The application should now be accessible at http://127.0.0.1:5000/.
+The application should now be accessible at <http://127.0.0.1:5000/>.
+
+## Diagrams
+
+In this section, you can find various diagrams that provide a visual representation of different aspects of the application.
+
+### Entity Relationship Diagram
+
+This diagram illustrates the relationships between the entities in the database.
+
+![er](diagrams/er.svg)
+
+### Flow Diagram
+
+This diagram shows the flow of operations from logging an expense to executing a payment.
+
+![flow](diagrams/flow.svg)
+
+### Architecture Diagram
+
+This diagram provides an overview of the application's architecture, including the frontend, backend, and database components.
+
+![architecture](diagrams/architecture.svg)
