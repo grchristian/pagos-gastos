@@ -10,9 +10,10 @@
       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center shadow-sm">
       <div>
         <h5 class="mb-1">{{ cuenta.numero_cuenta }} - {{ cuenta.nombre_banco }}</h5>
-        <small>Saldo: ${{ cuenta.saldo }}</small>
+        <small>Saldo: ${{ cuenta.saldo|round(2) }}</small>
       </div>
-      <span class="badge {{ 'badge-success' if cuenta.saldo > 0 else 'badge-danger' }}">${{ cuenta.saldo }}</span>
+      <span class="badge {{ 'badge-success' if cuenta.saldo > 0 else 'badge-danger' }}">${{ cuenta.saldo|round(2)
+        }}</span>
     </a>
     {% endfor %}
   </div>

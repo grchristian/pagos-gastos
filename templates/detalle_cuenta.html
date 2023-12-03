@@ -10,7 +10,7 @@
       </h1>
     </div>
     <div class="card-body bg-light">
-      <h5 class="card-title text-success">Saldo: ${{ cuenta.saldo }}</h5>
+      <h5 class="card-title text-success">Saldo: ${{ cuenta.saldo|round(2) }}</h5>
       <h2 class="h4 mt-4 text-primary">Cargos a esta Cuenta</h2>
       <ul class="list-group list-group-flush">
         {% for pago in pagos %}
@@ -18,7 +18,8 @@
           class="list-group-item {{ 'list-group-item-success' if pago.estado == 'aprobado' else 'list-group-item-warning' if pago.estado == 'pendiente' else 'list-group-item-secondary' }}">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <strong>Pago de ${{ pago.monto }}</strong> - Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S') }}
+              <strong>Pago de ${{ pago.monto|round(2) }}</strong> - Fecha: {{ pago.fecha.strftime('%Y-%m-%d %H:%M:%S')
+              }}
             </div>
             <span
               class="badge {{ 'badge-success' if pago.estado == 'aprobado' else 'badge-warning' if pago.estado == 'pendiente' else 'badge-secondary' }}">
