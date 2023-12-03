@@ -54,13 +54,13 @@ To set up and initialize the database, follow these steps:
    Run the `setup_db.py` script to create initial data:
 
    ```bash
-   python setup_db.py
+   python3 setup_db.py
    ```
 
 ### Start the Application
 
 ```bash
-flask run
+python3 app.py
 ```
 
 The application should now be accessible at <http://127.0.0.1:5000/>.
